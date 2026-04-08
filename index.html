@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PC233 Card Replica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto+Condensed:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="wrapper">
+    <!-- Cards Flex Layout Container -->
+    <div class="cards-layout">
+      
+      <!-- Main "Played Games" Card -->
+      <div class="card card-played">
+        <!-- Main gradient layer and contents -->
+        <div class="card-bg">
+          <!-- Background dots (rendered by JS) -->
+          <div class="bg-dots-container">
+            <div class="bg-dots-grid" id="bg-dots-grid"></div>
+          </div>
+
+          <img alt="subtract" class="img-subtract" src="./assets/19ff07e5404dae7f90387c8542784d3b27ef6895.svg" onerror="this.style.display='none'" />
+          
+          <!-- GAME watermark -->
+          <p class="watermark-text">GAME</p>
+
+          <!-- Top Left Badge -->
+          <div class="badge-container">
+             <div class="badge-icon">
+               <img src="./assets/7be59321995b13f051450a293b808a0ae6746250.svg" alt="233 logo">
+             </div>
+             <div class="badge-text-group">
+               <span class="badge-text">我的</span>
+               <img class="badge-sub-icon" src="./assets/ca3790f3c790ce6f6acec174742f1fcb1840ccfb.svg" alt="sub icon">
+             </div>
+          </div>
+
+          <!-- Main Stats -->
+          <div class="stats-container">
+            <!-- Item 1: Games Played -->
+            <div class="stat-item">
+              <div class="stat-value-group">
+                <span class="stat-number stat-num-1">99</span>
+                <span class="stat-unit stat-unit-1">款</span>
+              </div>
+              <div class="stat-label-group">
+                <img class="stat-icon" src="./assets/ddcc5e913c7dfdc206cb43582bb6289800fc9a73.svg" alt="icon">
+                <p class="stat-label">玩过的游戏</p>
+              </div>
+            </div>
+
+            <!-- Item 2: Playtime -->
+            <div class="stat-item">
+              <div class="stat-value-group">
+                <span class="stat-number stat-num-2">7852.5</span>
+                <span class="stat-unit stat-unit-2">小时</span>
+              </div>
+              <div class="stat-label-group">
+                <img class="stat-icon stat-icon-small" src="./assets/c156dd0779dddbf433eff50d9556beaced376a2e.svg" alt="icon">
+                <p class="stat-label">游玩时长</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Card 2: Reserved Games -->
+      <div class="card card-reserved">
+        <div class="card-bg">
+          <!-- Background icon rows with gradient mask, scrolling animation -->
+          <div class="icon-grid-mask">
+            <!-- Row 1: scrolls left -->
+            <div class="icon-row icon-row-1">
+              <div class="icon-row-track">
+                <div class="icon-cell"><img src="./assets/f4c39922afc7d7fafc26aabd538004f2b4aff5b0.svg" alt=""></div>
+                <div class="icon-cell"><img src="./assets/43034c521a808df41ba3b0fe2d21396fc5cfa0e5.svg" alt=""></div>
+                <div class="icon-cell"><img src="./assets/a822867f5e095edaab126de3083c287f4c3bdd93.svg" alt=""></div>
+                <div class="icon-cell"><img src="./assets/4d8b045c48c10df15f17a60d4aa3f4c7a136d2b1.svg" alt=""></div>
+                <div class="icon-cell"><img src="./assets/63e68034cc5dee0b1bd50c878d04807702b872df.svg" alt=""></div>
+                <!-- Duplicate for seamless loop -->
+                <div class="icon-cell"><img src="./assets/f4c39922afc7d7fafc26aabd538004f2b4aff5b0.svg" alt=""></div>
+                <div class="icon-cell"><img src="./assets/43034c521a808df41ba3b0fe2d21396fc5cfa0e5.svg" alt=""></div>
+                <div class="icon-cell"><img src="./assets/a822867f5e095edaab126de3083c287f4c3bdd93.svg" alt=""></div>
+                <div class="icon-cell"><img src="./assets/4d8b045c48c10df15f17a60d4aa3f4c7a136d2b1.svg" alt=""></div>
+                <div class="icon-cell"><img src="./assets/63e68034cc5dee0b1bd50c878d04807702b872df.svg" alt=""></div>
+              </div>
+            </div>
+            <!-- Row 2: scrolls right -->
+            <div class="icon-row icon-row-2">
+              <div class="icon-row-track">
+                <div class="icon-cell"><img src="./assets/03a51f5d040b28f618635a08c9bd4e182d1f6428.svg" alt=""></div>
+                <div class="icon-cell"><img src="./assets/f4c39922afc7d7fafc26aabd538004f2b4aff5b0.svg" alt=""></div>
+                <div class="icon-cell"><img src="./assets/297f4beb416cafe087c9e94453bc5efe9c4d2eb6.svg" alt=""></div>
+                <div class="icon-cell"><img src="./assets/642ed98dd05fc30e1930d73a4e59aa322cf89cc8.svg" alt=""></div>
+                <div class="icon-cell"><img src="./assets/a822867f5e095edaab126de3083c287f4c3bdd93.svg" alt=""></div>
+                <!-- Duplicate for seamless loop -->
+                <div class="icon-cell"><img src="./assets/03a51f5d040b28f618635a08c9bd4e182d1f6428.svg" alt=""></div>
+                <div class="icon-cell"><img src="./assets/f4c39922afc7d7fafc26aabd538004f2b4aff5b0.svg" alt=""></div>
+                <div class="icon-cell"><img src="./assets/297f4beb416cafe087c9e94453bc5efe9c4d2eb6.svg" alt=""></div>
+                <div class="icon-cell"><img src="./assets/642ed98dd05fc30e1930d73a4e59aa322cf89cc8.svg" alt=""></div>
+                <div class="icon-cell"><img src="./assets/a822867f5e095edaab126de3083c287f4c3bdd93.svg" alt=""></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="reserved-content">
+            <div class="stat-value-group reserved-number">
+              <span class="stat-number stat-num-3">1</span>
+              <span class="stat-unit stat-unit-3">款</span>
+            </div>
+            
+            <div class="stat-label-group reserved-label">
+              <img class="stat-icon stat-icon-small" src="./assets/2ef52d56ffc2b4240bef3da2e6e3210373f68b82.svg" alt="icon">
+              <p class="stat-label">已预约游戏</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 Column: Stacked Stats -->
+      <div class="card-stats-col">
+
+        <!-- Account Value (账号价值) - icon+label absolute top-left, number absolute right -->
+        <div class="card card-small card-account">
+          <!-- Icon + Label group, absolute positioned to left:35 top:25 -->
+          <div class="account-left">
+            <!-- Yuan logo box: 32×32 outer, 30×30 inner glass -->
+            <div class="logo-box logo-box-yuan">
+              <span class="yuan-icon">￥</span>
+            </div>
+            <p class="stat-label">账号价值</p>
+          </div>
+          <!-- Number absolute right -->
+          <span class="stat-number stat-num-4">200</span>
+        </div>
+
+        <!-- Data & Achievements (数据及成就) - horizontal flex -->
+        <div class="card card-small card-achievements">
+          <div class="card-bg flex-between">
+            <div class="stat-label-group">
+              <!-- Star icon: 30×30 container, SVG is larger and overflows -->
+              <div class="logo-box logo-box-star">
+                <div class="star-icon-wrap">
+                  <img src="./assets/star_purple_real.svg" alt="star" class="star-icon">
+                </div>
+              </div>
+              <p class="stat-label">数据及成就</p>
+            </div>
+            <span class="stat-number stat-num-5">72</span>
+          </div>
+        </div>
+
+
+    </div>
+  </div>
+
+  <script>
+    const grid = document.getElementById('bg-dots-grid');
+    
+    // Hardcoded highlight indices to map to the design
+    const indices10 = [35, 46, 54, 57, 131, 132, 142, 146, 148, 150, 162, 192, 193, 219, 226, ...Array(15).fill(0).map(() => Math.floor(Math.random() * 625))]; 
+    const indices20 = [256, 303, 413, 462, 466, ...Array(5).fill(0).map(() => Math.floor(Math.random() * 625))];
+    const indices40 = [334, 443];
+    const indices50 = [390, 500];
+
+    for (let i = 0; i < 625; i++) {
+       const div = document.createElement('div');
+       div.className = 'dot';
+       
+       let isGlowing = true;
+
+       if (indices50.includes(i) || Math.random() < 0.005) {
+         div.classList.add('dot-50');
+       } else if (indices40.includes(i) || Math.random() < 0.01) {
+         div.classList.add('dot-40');
+       } else if (indices20.includes(i) || Math.random() < 0.02) {
+         div.classList.add('dot-20');
+       } else if (indices10.includes(i) || Math.random() < 0.05) {
+         div.classList.add('dot-10');
+       } else {
+         div.classList.add('dot-01');
+         isGlowing = false;
+       }
+
+       // Add subtle sci-fi pulse to glowing dots with random offsets
+       if (isGlowing) {
+         const duration = 2 + Math.random() * 4; // 2s to 6s
+         const delay = Math.random() * 3; // 0s to 3s delay
+         div.style.animation = `subtlePulse ${duration}s infinite alternate ease-in-out ${delay}s`;
+       }
+
+       grid.appendChild(div);
+    }
+  </script>
+</body>
+</html>
