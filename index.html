@@ -3,197 +3,353 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PC-233 Button Design System</title>
+    <title>Consolidated Design System - PC 233 & Interaction</title>
     <link rel="stylesheet" href="index.css">
-</head>
-<body>
-    
-    <!-- Width Resizer & Settings Dashboard -->
-    <div style="max-width: 800px; margin: 0 auto; margin-bottom: 32px; padding: 20px; background: rgba(255,255,255,0.03); border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-        <label style="color: #fff; font-size: 14px; font-weight: 500; display: flex; justify-content: space-between; margin-bottom: 12px;">
-            <span>Primary Button Width Tester</span>
-            <span id="widthValue" style="color: #ffe1bd; font-family: monospace;">Auto</span>
-        </label>
-        <input type="range" id="widthSlider" min="88" max="320" value="120" style="width: 100%; accent-color: #ff7210; cursor: ew-resize;">
-        
-        <div style="margin-top: 16px; display: flex; gap: 16px; align-items: center;">
-            <button onclick="resetWidth()" style="padding: 6px 12px; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: #fff; border-radius: 4px; cursor: pointer; font-size: 12px;">
-                Reset to Auto
-            </button>
-            <label style="color: #fff; font-size: 13px; display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                <input type="checkbox" id="iconToggle" style="accent-color: #ff7210; cursor: pointer;">
-                Show Icons
-            </label>
-        </div>
-    </div>
-    
-    <script>
-        const slider = document.getElementById('widthSlider');
-        const display = document.getElementById('widthValue');
-        
-        slider.addEventListener('input', (e) => {
-            const val = e.target.value + 'px';
-            display.textContent = val;
-            // Target all .btn to see scaling across different heights
-            document.querySelectorAll('.btn').forEach(b => {
-                b.style.width = val;
-                b.style.justifyContent = 'center'; // Keep text perfectly centered during stretch
-            });
-        });
-
-        function resetWidth() {
-            display.textContent = 'Auto';
-            slider.value = 88; // arbitrary reset visually
-            document.querySelectorAll('.btn').forEach(b => {
-                b.style.width = 'auto'; // Revert to content/min-width
-            });
+    <style>
+        :root {
+            --nav-height: 64px;
+            --sidebar-width: 240px;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
         }
 
-        // Icon Toggle Logic
-        document.getElementById('iconToggle').addEventListener('change', (e) => {
-            const displayMode = e.target.checked ? 'inline-flex' : 'none';
-            document.querySelectorAll('.icon-slot').forEach(slot => {
-                slot.style.display = displayMode;
-            });
-        });
+        body {
+            background-color: #0d0d12;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            color: var(--text-primary);
+        }
 
-        // Mouse Tracker for Interactive Button Glows
-        document.addEventListener('mousemove', e => {
-            const btn = e.target.closest('.btn--secondary');
-            if (!btn) return;
-            const rect = btn.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            btn.style.setProperty('--mouse-x', `${x}px`);
-            btn.style.setProperty('--mouse-y', `${y}px`);
-        });
+        /* --- Navigation Tabs --- */
+        .nav-container {
+            height: var(--nav-height);
+            background: rgba(16, 16, 23, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            gap: 40px;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-right: 20px;
+        }
+
+        .nav-logo-box {
+            width: 32px;
+            height: 32px;
+            background: var(--primary-6);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: white;
+            font-size: 18px;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 20px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-bright);
+        }
+
+        .tab-btn.active {
+            color: var(--primary-6);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-6);
+            box-shadow: 0 -2px 10px var(--primary-6);
+        }
+
+        /* --- Content Layout --- */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px;
+            scroll-behavior: smooth;
+        }
+
+        .tab-content {
+            display: none;
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- UI Components for Documentation --- */
+        .section-title {
+            margin: 48px 0 24px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--primary-6);
+            border-radius: 2px;
+        }
+
+        .grid-docs {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card-doc {
+            background: #16161e;
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #16161e;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+        }
+        .matrix-table th, .matrix-table td {
+            padding: 16px 24px;
+            text-align: left;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .matrix-table th {
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-tertiary);
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .dev-tag {
+            font-family: 'Cascadia Code', monospace;
+            color: var(--primary-5);
+            background: rgba(255, 147, 59, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        /* --- Special Demos --- */
+        .color-block { width: 32px; height: 20px; border-radius: 2px; display: inline-block; vertical-align: middle; margin-right: 8px; border: 1px solid rgba(255,255,255,0.1); }
+        
+        .demo-container {
+            padding: 40px;
+            background: radial-gradient(circle at top left, #2b2b36, #101017);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="nav-container">
+        <div class="nav-logo">
+            <div class="nav-logo-box">G</div>
+            <div class="text-xl text-bright">PC 233 Design System</div>
+        </div>
+        <button class="tab-btn active" onclick="switchTab('btn')">Buttons 系统</button>
+        <button class="tab-btn" onclick="switchTab('hover')">Hover 交互系统</button>
+        <button class="tab-btn" onclick="switchTab('tokens')">全局 Tokens</button>
+    </nav>
+
+    <main class="main-content">
+        
+        <!-- Tab: Buttons -->
+        <div id="tab-btn" class="tab-content active">
+            <header>
+                <h1 class="text-display">Button System (PC-233)</h1>
+                <p class="text-secondary">定义了从基础业务按钮到高保定启动按钮的完整状态机。</p>
+            </header>
+
+            <h2 class="section-title text-xl">1. 高保定启动按钮 (High-Fidelity)</h2>
+            <p class="text-sm">适用于游戏启动、核心下载、充值等顶级动作。具有环境光弥散与内部描边。</p>
+            <div class="demo-container">
+                <div style="text-align: center;">
+                    <button class="btn-hifi">启动</button>
+                    <div class="text-xs text-tertiary" style="margin-top:12px;">Class: <span class="dev-tag">.btn-hifi</span></div>
+                </div>
+                <div class="card-doc" style="flex: 1; min-width: 400px;">
+                    <div class="text-sm text-secondary">
+                        <strong>视觉要素：</strong><br>
+                        - 渐变：双层径向渐变叠加 (Radial Gradient)<br>
+                        - 光效：Inset Shadow 模拟内发光 + 外部弥散投影<br>
+                        - 描边：1px 半透明线性渐变 Mask 描边<br>
+                        - 交互：Hover 提亮并略微放大，Active 缩放回弹
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="section-title text-xl">2. 基础业务按钮 (Standard)</h2>
+            <div class="grid-docs">
+                <div class="card-doc">
+                    <h3 class="text-lg text-bright">Primary Button</h3>
+                    <p class="text-xs text-tertiary">主操作，品牌色背景。</p>
+                    <div style="margin: 20px 0;"><button class="btn-primary">确认提交</button></div>
+                    <span class="dev-tag">.btn-primary</span>
+                </div>
+                <div class="card-doc" style="opacity: 0.6;">
+                    <h3 class="text-lg text-bright">Disabled State</h3>
+                    <p class="text-xs text-tertiary">禁用态，40% 透明度。</p>
+                    <div style="margin: 20px 0;"><button class="btn-primary" style="cursor: not-allowed; filter: grayscale(1);">不可用</button></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Hover -->
+        <div id="tab-hover" class="tab-content">
+            <header>
+                <h1 class="text-display">Hover Interaction System (V4)</h1>
+                <p class="text-secondary">交互基准：容器提亮 5% 白色遮罩 | 文本亮度 20% 级阶跃升 | 品牌橙唤醒交互</p>
+            </header>
+
+            <h2 class="section-title text-xl">1. 容器交互模式 (Containers)</h2>
+            <div class="grid-docs">
+                <div class="card-doc hover-container-glow" style="cursor: pointer;">
+                    <h3 class="text-lg text-bright">动效增强 (Animated)</h3>
+                    <p class="text-xs text-tertiary" style="margin-bottom:12px;">.hover-container-glow</p>
+                    <div class="text-sm text-secondary">容器提亮 + 旋转流光边框</div>
+                </div>
+                <div class="card-doc hover-container-base" style="cursor: pointer;">
+                    <h3 class="text-lg text-bright">基础提亮 (Basic)</h3>
+                    <p class="text-xs text-tertiary" style="margin-bottom:12px;">.hover-container-base</p>
+                    <div class="text-sm text-secondary">容器 5% 白色遮罩提亮</div>
+                </div>
+                <div class="card-doc hover-container-none" style="cursor: pointer;">
+                    <h3 class="text-lg text-bright">纯文字模式 (Text Only)</h3>
+                    <p class="text-xs text-tertiary" style="margin-bottom:12px;">.hover-container-none</p>
+                    <div class="text-sm text-secondary">仅内部文字/图标产生交互</div>
+                </div>
+            </div>
+
+            <h2 class="section-title text-xl">2. 文本交互刻度 (Typography Matrix)</h2>
+            <table class="matrix-table">
+                <thead>
+                    <tr>
+                        <th>类型</th>
+                        <th>变量</th>
+                        <th>跃迁规则</th>
+                        <th>实时交互 (Hover Me)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="text-base-strong">主正文</td>
+                        <td><span class="dev-tag">--text-primary</span></td>
+                        <td>80% → 100%</td>
+                        <td><span class="text-primary" style="cursor:pointer; font-size:16px;">悬停提亮至 100%</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-base-strong">次级文</td>
+                        <td><span class="dev-tag">--text-secondary</span></td>
+                        <td>60% → 80%</td>
+                        <td><span class="text-secondary" style="cursor:pointer; font-size:16px;">悬停提亮至 80%</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-base-strong">蓝色链接</td>
+                        <td><span class="dev-tag">--color-link-blue</span></td>
+                        <td>#409EFF → #66B1FF</td>
+                        <td><a href="#" class="text-link-blue" style="font-size:16px; text-decoration: underline;">交互式超链接</a></td>
+                    </tr>
+                    <tr>
+                        <td class="text-base-strong">唤醒态</td>
+                        <td><span class="dev-tag">.hover-awaken</span></td>
+                        <td>White → Brand Orange</td>
+                        <td><span class="text-primary hover-awaken" style="cursor:pointer; font-size:16px; font-weight:700;">唤醒品牌颜色</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Tab: Tokens -->
+        <div id="tab-tokens" class="tab-content">
+            <header>
+                <h1 class="text-display">Global Tokens</h1>
+                <p class="text-secondary">设计系统底层变量池。</p>
+            </header>
+
+            <h2 class="section-title text-xl">Color Palette</h2>
+            <div class="grid-docs" style="grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));">
+                <div class="card-doc">
+                    <div class="color-block" style="background: var(--primary-6);"></div>
+                    <span class="text-sm">Primary-6 (#FF7210)</span>
+                </div>
+                <div class="card-doc">
+                    <div class="color-block" style="background: var(--primary-5);"></div>
+                    <span class="text-sm">Primary-5 (#FF933B)</span>
+                </div>
+                <div class="card-doc">
+                    <div class="color-block" style="background: var(--color-background);"></div>
+                    <span class="text-sm">BG-App (#101017)</span>
+                </div>
+                <div class="card-doc">
+                    <div class="color-block" style="background: var(--color-bg-dialog);"></div>
+                    <span class="text-sm">BG-Surface (#2B2B36)</span>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        function switchTab(tabId) {
+            // Update Buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+
+            // Update Content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById('tab-' + tabId).classList.add('active');
+        }
     </script>
-
-    <div style="max-width: 1000px; margin: 0 auto;">
-        
-        <h2 style="color: white; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px; margin-bottom: 24px; font-weight: 400;">主要 (Primary)</h2>
-        <table style="width: 100%; text-align: left; border-collapse: collapse; margin-bottom: 60px;">
-            <thead>
-                <tr style="color: rgba(255,255,255,0.4); text-transform: uppercase; font-size: 13px; letter-spacing: 1px; border-bottom: 1px solid rgba(255,255,255,0.05);">
-                    <th style="padding-bottom: 16px; width: 140px; font-weight: normal;">Size Variant</th>
-                    <th style="padding-bottom: 16px; font-weight: normal;">Default / Interactive</th>
-                    <th style="padding-bottom: 16px; font-weight: normal;">Disabled Variant</th>
-                </tr>
-            </thead>
-            <tbody style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                <!-- Large -->
-                <tr style="border-bottom: 1px solid rgba(255,255,255,0.02);">
-                    <td style="color: rgba(255,255,255,0.6); font-size: 14px;">Large <br><span style="color: #666; font-size: 12px;">H: 48px</span></td>
-                    <td style="padding: 24px 0;">
-                        <button class="btn btn--primary btn--lg">
-                            <span class="icon-slot" style="display: none;"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M14 11V13C14 13.5523 13.5523 14 13 14H3C2.44772 14 2 13.5523 2 13V11H3.5V12.5H12.5V11H14ZM8.75 8.939L11.47 6.22L12.53 7.28L8 11.81L3.47 7.28L4.53 6.22L7.25 8.939V2H8.75V8.939Z" /></svg></span>
-                            下载安装
-                        </button>
-                    </td>
-                    <td>
-                        <button class="btn btn--primary btn--lg" disabled>
-                            <span class="icon-slot" style="display: none;"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M14 11V13C14 13.5523 13.5523 14 13 14H3C2.44772 14 2 13.5523 2 13V11H3.5V12.5H12.5V11H14ZM8.75 8.939L11.47 6.22L12.53 7.28L8 11.81L3.47 7.28L4.53 6.22L7.25 8.939V2H8.75V8.939Z" /></svg></span>
-                            下载安装
-                        </button>
-                    </td>
-                </tr>
-                <!-- Medium -->
-                <tr style="border-bottom: 1px solid rgba(255,255,255,0.02);">
-                    <td style="color: rgba(255,255,255,0.6); font-size: 14px;">Medium <br><span style="color: #666; font-size: 12px;">H: 36px</span></td>
-                    <td style="padding: 24px 0;">
-                        <button class="btn btn--primary btn--md">
-                            <span class="icon-slot" style="display: none;"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M14 11V13C14 13.5523 13.5523 14 13 14H3C2.44772 14 2 13.5523 2 13V11H3.5V12.5H12.5V11H14ZM8.75 8.939L11.47 6.22L12.53 7.28L8 11.81L3.47 7.28L4.53 6.22L7.25 8.939V2H8.75V8.939Z" /></svg></span>
-                            下载安装
-                        </button>
-                    </td>
-                    <td>
-                        <button class="btn btn--primary btn--md" disabled>
-                            <span class="icon-slot" style="display: none;"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M14 11V13C14 13.5523 13.5523 14 13 14H3C2.44772 14 2 13.5523 2 13V11H3.5V12.5H12.5V11H14ZM8.75 8.939L11.47 6.22L12.53 7.28L8 11.81L3.47 7.28L4.53 6.22L7.25 8.939V2H8.75V8.939Z" /></svg></span>
-                            下载安装
-                        </button>
-                    </td>
-                </tr>
-                <!-- Small -->
-                <tr>
-                    <td style="color: rgba(255,255,255,0.6); font-size: 14px;">Small <br><span style="color: #666; font-size: 12px;">H: 28px</span></td>
-                    <td style="padding: 24px 0;">
-                        <button class="btn btn--primary btn--sm">
-                            <span class="icon-slot" style="display: none;"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M14 11V13C14 13.5523 13.5523 14 13 14H3C2.44772 14 2 13.5523 2 13V11H3.5V12.5H12.5V11H14ZM8.75 8.939L11.47 6.22L12.53 7.28L8 11.81L3.47 7.28L4.53 6.22L7.25 8.939V2H8.75V8.939Z" /></svg></span>
-                            下载安装
-                        </button>
-                    </td>
-                    <td>
-                        <button class="btn btn--primary btn--sm" disabled>
-                            <span class="icon-slot" style="display: none;"><svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M14 11V13C14 13.5523 13.5523 14 13 14H3C2.44772 14 2 13.5523 2 13V11H3.5V12.5H12.5V11H14ZM8.75 8.939L11.47 6.22L12.53 7.28L8 11.81L3.47 7.28L4.53 6.22L7.25 8.939V2H8.75V8.939Z" /></svg></span>
-                            下载安装
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <h2 style="color: rgba(255,255,255,0.5); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px; margin-bottom: 24px; font-weight: 400; font-size: 18px;">Other System Variants</h2>
-        
-        <div id="other-variants-container"></div>
-
-        <script>
-            const svgIcon = '<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M14 11V13C14 13.5523 13.5523 14 13 14H3C2.44772 14 2 13.5523 2 13V11H3.5V12.5H12.5V11H14ZM8.75 8.939L11.47 6.22L12.53 7.28L8 11.81L3.47 7.28L4.53 6.22L7.25 8.939V2H8.75V8.939Z" /></svg>';
-            
-            const variantConfigs = [
-                { title: '次要 (Secondary)', className: 'btn--secondary' },
-                { title: '线框主要 (Outline Primary)', className: 'btn--outline-primary' },
-                { title: '线框次要1 (Outline Sec 1)', className: 'btn--outline-secondary1' },
-                { title: '线框次要2 (Outline Sec 2)', className: 'btn--outline-secondary2' },
-                { title: '填充 (Fill)', className: 'btn--fill' },
-                { title: '文字 (Text)', className: 'btn--text' },
-                { title: '警示 (Warning)', className: 'btn--warning' }
-            ];
-
-            const sizeConfigs = [
-                { label: 'Large', subTitle: 'H: 48px', className: 'btn--lg' },
-                { label: 'Medium', subTitle: 'H: 36px', className: 'btn--md' },
-                { label: 'Small', subTitle: 'H: 28px', className: 'btn--sm' }
-            ];
-
-            const container = document.getElementById('other-variants-container');
-            const isIconChecked = document.getElementById('iconToggle').checked;
-            const iconDisplayMode = isIconChecked ? 'inline-flex' : 'none';
-
-            variantConfigs.forEach(variant => {
-                const tableHTML = `
-                    <h3 style="color: rgba(255,255,255,0.8); font-weight: 400; margin-bottom: 12px; margin-top: 40px; font-size: 15px;">${variant.title}</h3>
-                    <table style="width: 100%; text-align: left; border-collapse: collapse; margin-bottom: 24px;">
-                        <thead>
-                            <tr style="color: rgba(255,255,255,0.4); text-transform: uppercase; font-size: 13px; letter-spacing: 1px; border-bottom: 1px solid rgba(255,255,255,0.05);">
-                                <th style="padding-bottom: 16px; width: 140px; font-weight: normal;">Size Variant</th>
-                                <th style="padding-bottom: 16px; font-weight: normal;">Default / Interactive</th>
-                                <th style="padding-bottom: 16px; font-weight: normal;">Disabled Variant</th>
-                            </tr>
-                        </thead>
-                        <tbody style="border-bottom: 1px solid rgba(255,255,255,0.05);">
-                            ${sizeConfigs.map(size => `
-                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.02);">
-                                    <td style="color: rgba(255,255,255,0.6); font-size: 14px;">${size.label} <br><span style="color: #666; font-size: 12px;">${size.subTitle}</span></td>
-                                    <td style="padding: 24px 0;">
-                                        <button class="btn ${variant.className} ${size.className}">
-                                            <span class="icon-slot" style="display: ${iconDisplayMode};">${svgIcon}</span>下载安装
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <button class="btn ${variant.className} ${size.className}" disabled>
-                                            <span class="icon-slot" style="display: ${iconDisplayMode};">${svgIcon}</span>下载安装
-                                        </button>
-                                    </td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                `;
-                container.insertAdjacentHTML('beforeend', tableHTML);
-            });
-        </script>
-
-    </div>
-
 </body>
 </html>
